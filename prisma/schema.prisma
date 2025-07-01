@@ -1,0 +1,107 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  email    String   @unique
+  password String
+}
+
+
+model Navigation {
+  id    String  @id @default(auto()) @map("_id") @db.ObjectId
+  title String
+  links Link[]
+}
+
+type Link {
+  href  String
+  label String
+}
+
+model Hero {
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  role        String
+  description String
+  imageUrl    String
+  buttons     HeroButton[]
+}
+
+type HeroButton {
+  label   String
+  href    String
+  primary Boolean @default(true)
+}
+
+model About {
+  id              String            @id @default(auto()) @map("_id") @db.ObjectId
+  sectionTitle    String
+  subtitle        String
+  description     String
+  extendedText    String
+  resumeUrl       String
+}
+
+model Experience {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  company     String
+  location    String
+  period      String
+  description String
+}
+
+model SkillGroup {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  title   String
+  iconKey String
+  items   String[]
+}
+
+model Certificate {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  provider  String
+  link      String
+  gradient  String
+  iconKey   String
+}
+
+model Project {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  tech        String[]
+  image       String
+  github      String?
+  live        String?
+  featured    Boolean @default(false)
+  order       Int?
+}
+
+model Message {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  email     String
+  subject   String
+  message   String
+  createdAt DateTime @default(now())
+}
+
+model SiteSettings {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  author    String
+  email     String
+  phone     String
+  location  String
+  telegram  String
+  github    String
+  linkedin  String
+}
